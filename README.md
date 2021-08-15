@@ -71,7 +71,28 @@ The product order definition will define:
 - The total of this product order.
 
 ## Persistance
+There will be three interfaces, `IOrderStorage`, `IProductStorage` and 
+`IProductDiscountStorage`. These will all define the interfaces to perform CRUD 
+operations on the database.
+<br>
+Each implementation will be named as `OrderStorage`, `ProductStorage` and 
+`ProductDiscountStorage` respectively, each accepting a `DataContext`. 
+This `DataContext` is a `DbContext` which is defined in `Startup.cs`. 
+As a result of this, switching of database implementations without rewriting 
+code is possible.
 
+## Requests
+All API request controllers will be defined under `Controllers`. 
+These controllers are:
+- DiscountsController
+- OrdersController
+- ProductsController
+
+## Formatters
+When the `OrdersController` returns an order and the request accepts a content 
+type such as `text/plain` or `text/html` then the `OrderFormatter` will provide 
+a custom implementation for rendering a simplistic view of an order in either
+HTML or Plain Text.
 
 ## Formatting
 ### Text
@@ -89,7 +110,8 @@ Sub Total: $22.92<br>
 Total: $25.22
 
 ### HTML
-If the same order as above is requested in HTML format then the output would look like the following:
+If the same order as above is requested in HTML format then the output would 
+look like the following:
 ```
 <html>
 <body>
